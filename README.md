@@ -7,6 +7,10 @@
 This project is dedicated to testing the booking functionalities of the [Restful Booker API](https://restful-booker.herokuapp.com/apidoc/index.html).  
 It serves as a practical exercise in API testing, focusing on creating, retrieving, updating, and deleting booking records.
 
+## 📽️ Example
+
+![Example](example.gif)
+
 ## ✨ Features
 
 - **Authentication**: Implement token-based authentication.
