@@ -1,0 +1,1635 @@
+{
+	"info": {
+		"_postman_id": "9eab7d86-4430-47f9-8068-e3e193cf8c7d",
+		"name": "Restful Booker",
+		"description": "<img src=\"https://content.pstmn.io/f8a37318-da5d-4da4-9a05-5721448fe112/aW1hZ2UucG5n\" width=\"661\" height=\"411\">\n\n## API documentation for the playground API restful-booker.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28484444"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Token is present in response body\", function () {\r",
+									"    pm.expect(responseData).to.have.property(\"token\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is not null\", function () {\r",
+									"    pm.expect(responseData.token).not.to.be.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is not empty\", function () {\r",
+									"    pm.expect(responseData.token).not.to.be.undefined;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is string\", function () {\r",
+									"    pm.expect(typeof responseData.token).to.equal('string');\r",
+									"})\r",
+									"\r",
+									"pm.collectionVariables.set(\"token\", responseData.token); // Set the token to a collection variable\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth"
+							]
+						},
+						"description": "This endpoint is used to authenticate a user by sending a POST request to the specified URL. The request should include the user's username and password.\n\n### Request Body\n\n- `username` (string) - The username of the user.\n    \n- `password` (string) - The password of the user.\n    \n\n### Response\n\nUpon successful authentication, the server responds with a status code of 200 and a JSON object containing a token. The token can be used for subsequent authorized requests."
+					},
+					"response": [
+						{
+							"name": "Create Token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\" : \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745517147&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=XKf5K2zmqqEWpQrSRE03HrDTbXlZGn8jWmouJulJV0g%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745517147&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=XKf5K2zmqqEWpQrSRE03HrDTbXlZGn8jWmouJulJV0g%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"1b-GA0KECWnBFLDMgONBXAfg4Fgb5o\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 17:52:27 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"a5853adac955250\"\n}"
+						}
+					]
+				}
+			],
+			"description": "> _**This folder generates a new authentication token. The token is required to access the protected**_ `PUT` _**and**_ `DELETE` _**methods on the**_ `/booking` _**endpoint.**_"
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create Booking",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generating first name\r",
+									"let firstName = \"Abdelrahman_\" + Math.floor(Math.random() * 10000);\r",
+									"pm.collectionVariables.set(\"firstname\", firstName);\r",
+									"\r",
+									"// Generating last name\r",
+									"let lastName = \"Fahmy_\" + Math.floor(Math.random() * 10000);\r",
+									"pm.collectionVariables.set(\"lastname\", lastName);\r",
+									"\r",
+									"// Generating total price\r",
+									"let totalPrice = Math.floor(Math.random() * 1000) + 1;\r",
+									"pm.collectionVariables.set(\"totalprice\", totalPrice);\r",
+									"\r",
+									"// Generating random check-in date between 1990-01-01 and 1999-12-30\r",
+									"let year = Math.floor(Math.random() * 10) + 1990; // 1990 to 1999\r",
+									"let month = Math.floor(Math.random() * 12); // 0 to 11\r",
+									"let day = Math.floor(Math.random() * 28) + 1; // 1 to 28 (safe for all months)\r",
+									"// Generating check-in date\r",
+									"let checkin = new Date(year, month, day);\r",
+									"// Checkout will be 1 to 20 days after checkin\r",
+									"let checkout = new Date(checkin);\r",
+									"checkout.setDate(checkin.getDate() + Math.floor(Math.random() * 20) + 1);\r",
+									"// Format to YYYY-MM-DD\r",
+									"function format(date) {\r",
+									"    return date.toISOString().split('T')[0];\r",
+									"}\r",
+									"pm.collectionVariables.set(\"checkinDate\", format(checkin));\r",
+									"pm.collectionVariables.set(\"checkoutDate\", format(checkout));\r",
+									"\r",
+									"// Generating additional needs\r",
+									"function getRandomAdditionalNeeds() {\r",
+									"    let options = [\"Breakfast\", \"Lunch\", \"Dinner\"];\r",
+									"    return options[Math.floor(Math.random() * options.length)];\r",
+									"}\r",
+									"pm.collectionVariables.set(\"additionalneeds\", getRandomAdditionalNeeds());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"//Check if the response contains bookingid and booking details.\r",
+									"pm.test(\"Response contains bookingid\", function () {\r",
+									"    pm.expect(responseData).to.have.property(\"bookingid\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains booking details\", function () {\r",
+									"    pm.expect(responseData.booking).to.have.property(\"firstname\");\r",
+									"    pm.expect(responseData.booking).to.have.property(\"lastname\");\r",
+									"    pm.expect(responseData.booking).to.have.property(\"totalprice\");\r",
+									"    pm.expect(responseData.booking).to.have.property(\"depositpaid\");\r",
+									"    pm.expect(responseData.booking).to.have.property(\"bookingdates\");\r",
+									"    pm.expect(responseData.booking.bookingdates).to.have.property(\"checkin\");\r",
+									"    pm.expect(responseData.booking.bookingdates).to.have.property(\"checkout\");\r",
+									"    pm.expect(responseData.booking).to.have.property(\"additionalneeds\");\r",
+									"});\r",
+									"\r",
+									"//Check if the response contains non-null and non-empty bookingid and booking details.\r",
+									"pm.test(\"Booking id is not null\", function () {\r",
+									"    pm.expect(responseData.bookingid).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Booking details are not null\", function () {\r",
+									"    pm.expect(responseData.booking.firstname).to.not.be.null;\r",
+									"    pm.expect(responseData.booking.lastname).to.not.be.null;\r",
+									"    pm.expect(responseData.booking.totalprice).to.not.be.null;\r",
+									"    pm.expect(responseData.booking.depositpaid).to.not.be.null;\r",
+									"    pm.expect(responseData.booking.bookingdates.checkin).to.not.be.null;\r",
+									"    pm.expect(responseData.booking.bookingdates.checkout).to.not.be.null;\r",
+									"    pm.expect(responseData.booking.additionalneeds).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Booking id is not empty\", function () {\r",
+									"    pm.expect(responseData.bookingid).to.not.be.undefined;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Booking details are not empty\", function () {\r",
+									"    pm.expect(responseData.booking.firstname).to.not.be.undefined;\r",
+									"    pm.expect(responseData.booking.lastname).to.not.be.undefined;\r",
+									"    pm.expect(responseData.booking.totalprice).to.not.be.undefined;\r",
+									"    pm.expect(responseData.booking.depositpaid).to.not.be.undefined;\r",
+									"    pm.expect(responseData.booking.bookingdates.checkin).to.not.be.undefined;\r",
+									"    pm.expect(responseData.booking.bookingdates.checkout).to.not.be.undefined;\r",
+									"    pm.expect(responseData.booking.additionalneeds).to.not.be.undefined;\r",
+									"});\r",
+									"\r",
+									"//Check if the bookingid is integer\r",
+									"pm.test(\"Booking id is integer\", function () {\r",
+									"    pm.expect(typeof responseData.bookingid).to.equal('number');\r",
+									"});\r",
+									"\r",
+									"//Check the type of booking details\r",
+									"pm.test(\"Booking details are string\", function () {\r",
+									"    pm.expect(typeof responseData.booking.firstname).to.equal('string');\r",
+									"    pm.expect(typeof responseData.booking.lastname).to.equal('string');\r",
+									"    pm.expect(typeof responseData.booking.totalprice).to.equal('number');\r",
+									"    pm.expect(typeof responseData.booking.depositpaid).to.equal('boolean');\r",
+									"    pm.expect(typeof responseData.booking.bookingdates.checkin).to.equal('string');\r",
+									"    pm.expect(typeof responseData.booking.bookingdates.checkout).to.equal('string');\r",
+									"    pm.expect(typeof responseData.booking.additionalneeds).to.equal('string');\r",
+									"});\r",
+									"\r",
+									"//Expected Values\r",
+									"var expectedFirstName = pm.collectionVariables.get(\"firstname\");\r",
+									"var expectedLastName = pm.collectionVariables.get(\"lastname\");\r",
+									"var expectedTotalPrice = pm.collectionVariables.get(\"totalprice\");\r",
+									"var expectedDepositPaid = pm.collectionVariables.get(\"depositPaid\") === 'true';\r",
+									"var expectedCheckIn = pm.collectionVariables.get(\"checkinDate\");\r",
+									"var expectedCheckOut = pm.collectionVariables.get(\"checkoutDate\");\r",
+									"var expectedAdditionalNeeds = pm.collectionVariables.get(\"additionalneeds\");\r",
+									"\r",
+									"//Check the values of booking details\r",
+									"pm.test(\"Check the value of firstname\", function () {\r",
+									"    pm.expect(responseData.booking.firstname).to.equal(expectedFirstName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of lastname\", function () {\r",
+									"    pm.expect(responseData.booking.lastname).to.equal(expectedLastName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of totalprice\", function () {\r",
+									"    pm.expect(responseData.booking.totalprice).to.equal(expectedTotalPrice);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of depositpaid\", function () {\r",
+									"    pm.expect(responseData.booking.depositpaid).to.equal(expectedDepositPaid);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkin\", function () {\r",
+									"    pm.expect(responseData.booking.bookingdates.checkin).to.equal(expectedCheckIn);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkout\", function () {\r",
+									"    pm.expect(responseData.booking.bookingdates.checkout).to.equal(expectedCheckOut);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of additionalneeds\", function () {\r",
+									"    pm.expect(responseData.booking.additionalneeds).to.equal(expectedAdditionalNeeds);\r",
+									"});\r",
+									"\r",
+									"//Set the booking id to collection variables\r",
+									"pm.collectionVariables.set(\"bookingID\", responseData.bookingid);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\" : \"{{firstname}}\",\r\n    \"lastname\" : \"{{lastname}}\",\r\n    \"totalprice\" : {{totalprice}},\r\n    \"depositpaid\" : {{depositPaid}},\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"{{checkinDate}}\",\r\n        \"checkout\" : \"{{checkoutDate}}\"\r\n    },\r\n    \"additionalneeds\" : \"{{additionalneeds}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/booking",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "### Create Booking\n\nThis endpoint allows the client to create a new booking.\n\n#### Request Body\n\n- `firstname` (string, required): The first name of the guest.\n    \n- `lastname` (string, required): The last name of the guest.\n    \n- `totalprice` (number, required): The total price of the booking.\n    \n- `depositpaid` _(boolean, required)_: Indicates whether the deposit has been paid (`true` or `false`).\n    \n- `bookingdates` _(object, required)_: An object containing the check-in and check-out dates.\n    \n    - `checkin` _(string, required)_: The check-in date in `YYYY-MM-DD` format.\n        \n    - `checkout` _(string, required)_: The check-out date in `YYYY-MM-DD` format.\n        \n- `additionalneeds` _(string, optional)_: Any additional requirements the guest has.\n    \n\n#### Response\n\nThe response will be in JSON format and will contain the following fields:\n\n- `bookingid` (number): The ID of the booking.\n    \n- `booking` (object): An object containing booking details.\n    \n    - `firstname` (string): The first name of the guest.\n        \n    - `lastname` (string): The last name of the guest.\n        \n    - `totalprice` (number): The total price of the booking.\n        \n    - `depositpaid` (boolean): Indicates whether the deposit has been paid.\n        \n    - `bookingdates` (object): An object containing check-in and check-out dates.\n        \n        - `checkin` (string): The check-in date.\n            \n        - `checkout` (string): The check-out date.\n            \n    - `additionalneeds` (string): Any additional needs or requests."
+					},
+					"response": [
+						{
+							"name": "Create Booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\" : \"Abdelrahman_6815\",\r\n    \"lastname\" : \"Fahmy_1346\",\r\n    \"totalprice\" : 605,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"1994-08-02\",\r\n        \"checkout\" : \"1994-08-03\"\r\n    },\r\n    \"additionalneeds\" : \"Lunch\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://restful-booker.herokuapp.com/booking",
+									"protocol": "https",
+									"host": [
+										"restful-booker",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745511481&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=UXA1gZSeiq9iY6glfBg6ZZZpWLiDzKHX7eGfocOTfbk%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745511481&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=UXA1gZSeiq9iY6glfBg6ZZZpWLiDzKHX7eGfocOTfbk%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "211"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"d3-VHMiU7WcaPRK1cQG8S1U4dBxTI8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 16:18:01 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"bookingid\": 3432,\n    \"booking\": {\n        \"firstname\": \"Abdelrahman_6815\",\n        \"lastname\": \"Fahmy_1346\",\n        \"totalprice\": 605,\n        \"depositpaid\": true,\n        \"bookingdates\": {\n            \"checkin\": \"1994-08-02\",\n            \"checkout\": \"1994-08-03\"\n        },\n        \"additionalneeds\": \"Lunch\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Bookings IDs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"let responseData = pm.response.json(); // array of objects with bookingid\r",
+									"let expectedId = pm.collectionVariables.get(\"bookingID\");\r",
+									"\r",
+									"// Extract all bookingids into a simple array\r",
+									"let bookingIds = responseData.map(item => item.bookingid);\r",
+									"\r",
+									"pm.test(\"Created booking ID is present in the list\", function () {\r",
+									"    pm.expect(bookingIds).to.include(expectedId);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/booking",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "This endpoint retrieves a list of bookings. The response returns a JSON array containing booking objects, with each object including a \"bookingid\" key."
+					},
+					"response": [
+						{
+							"name": "Get Bookings IDs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/booking",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745511742&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=VmectxlbJZUKnQsS%2BMD56Kpx7vHS1gJjvi1xHYxypGw%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745511742&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=VmectxlbJZUKnQsS%2BMD56Kpx7vHS1gJjvi1xHYxypGw%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7019"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"1b6b-HVJy1f6vVkZUrieWVD49w6sh9uU\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 16:22:22 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"bookingid\": 524\n    },\n    {\n        \"bookingid\": 277\n    },\n    {\n        \"bookingid\": 38\n    },\n    {\n        \"bookingid\": 319\n    },\n    {\n        \"bookingid\": 361\n    },\n    {\n        \"bookingid\": 114\n    },\n    {\n        \"bookingid\": 127\n    },\n    {\n        \"bookingid\": 130\n    },\n    {\n        \"bookingid\": 109\n    },\n    {\n        \"bookingid\": 525\n    },\n    {\n        \"bookingid\": 439\n    },\n    {\n        \"bookingid\": 517\n    },\n    {\n        \"bookingid\": 393\n    },\n    {\n        \"bookingid\": 65\n    },\n    {\n        \"bookingid\": 294\n    },\n    {\n        \"bookingid\": 368\n    },\n    {\n        \"bookingid\": 407\n    },\n    {\n        \"bookingid\": 484\n    },\n    {\n        \"bookingid\": 442\n    },\n    {\n        \"bookingid\": 330\n    },\n    {\n        \"bookingid\": 269\n    },\n    {\n        \"bookingid\": 100\n    },\n    {\n        \"bookingid\": 170\n    },\n    {\n        \"bookingid\": 31\n    },\n    {\n        \"bookingid\": 458\n    },\n    {\n        \"bookingid\": 6\n    },\n    {\n        \"bookingid\": 511\n    },\n    {\n        \"bookingid\": 343\n    },\n    {\n        \"bookingid\": 94\n    },\n    {\n        \"bookingid\": 8\n    },\n    {\n        \"bookingid\": 9\n    },\n    {\n        \"bookingid\": 74\n    },\n    {\n        \"bookingid\": 174\n    },\n    {\n        \"bookingid\": 508\n    },\n    {\n        \"bookingid\": 451\n    },\n    {\n        \"bookingid\": 244\n    },\n    {\n        \"bookingid\": 207\n    },\n    {\n        \"bookingid\": 148\n    },\n    {\n        \"bookingid\": 46\n    },\n    {\n        \"bookingid\": 521\n    },\n    {\n        \"bookingid\": 26\n    },\n    {\n        \"bookingid\": 436\n    },\n    {\n        \"bookingid\": 169\n    },\n    {\n        \"bookingid\": 395\n    },\n    {\n        \"bookingid\": 123\n    },\n    {\n        \"bookingid\": 273\n    },\n    {\n        \"bookingid\": 41\n    },\n    {\n        \"bookingid\": 339\n    },\n    {\n        \"bookingid\": 11\n    },\n    {\n        \"bookingid\": 3\n    },\n    {\n        \"bookingid\": 430\n    },\n    {\n        \"bookingid\": 546\n    },\n    {\n        \"bookingid\": 19\n    },\n    {\n        \"bookingid\": 298\n    },\n    {\n        \"bookingid\": 58\n    },\n    {\n        \"bookingid\": 64\n    },\n    {\n        \"bookingid\": 36\n    },\n    {\n        \"bookingid\": 86\n    },\n    {\n        \"bookingid\": 57\n    },\n    {\n        \"bookingid\": 284\n    },\n    {\n        \"bookingid\": 346\n    },\n    {\n        \"bookingid\": 197\n    },\n    {\n        \"bookingid\": 128\n    },\n    {\n        \"bookingid\": 501\n    },\n    {\n        \"bookingid\": 415\n    },\n    {\n        \"bookingid\": 358\n    },\n    {\n        \"bookingid\": 242\n    },\n    {\n        \"bookingid\": 432\n    },\n    {\n        \"bookingid\": 193\n    },\n    {\n        \"bookingid\": 155\n    },\n    {\n        \"bookingid\": 516\n    },\n    {\n        \"bookingid\": 323\n    },\n    {\n        \"bookingid\": 47\n    },\n    {\n        \"bookingid\": 315\n    },\n    {\n        \"bookingid\": 351\n    },\n    {\n        \"bookingid\": 506\n    },\n    {\n        \"bookingid\": 137\n    },\n    {\n        \"bookingid\": 25\n    },\n    {\n        \"bookingid\": 444\n    },\n    {\n        \"bookingid\": 471\n    },\n    {\n        \"bookingid\": 185\n    },\n    {\n        \"bookingid\": 40\n    },\n    {\n        \"bookingid\": 349\n    },\n    {\n        \"bookingid\": 172\n    },\n    {\n        \"bookingid\": 182\n    },\n    {\n        \"bookingid\": 187\n    },\n    {\n        \"bookingid\": 431\n    },\n    {\n        \"bookingid\": 163\n    },\n    {\n        \"bookingid\": 416\n    },\n    {\n        \"bookingid\": 461\n    },\n    {\n        \"bookingid\": 260\n    },\n    {\n        \"bookingid\": 545\n    },\n    {\n        \"bookingid\": 50\n    },\n    {\n        \"bookingid\": 120\n    },\n    {\n        \"bookingid\": 43\n    },\n    {\n        \"bookingid\": 37\n    },\n    {\n        \"bookingid\": 44\n    },\n    {\n        \"bookingid\": 504\n    },\n    {\n        \"bookingid\": 324\n    },\n    {\n        \"bookingid\": 520\n    },\n    {\n        \"bookingid\": 532\n    },\n    {\n        \"bookingid\": 386\n    },\n    {\n        \"bookingid\": 390\n    },\n    {\n        \"bookingid\": 264\n    },\n    {\n        \"bookingid\": 452\n    },\n    {\n        \"bookingid\": 225\n    },\n    {\n        \"bookingid\": 34\n    },\n    {\n        \"bookingid\": 143\n    },\n    {\n        \"bookingid\": 195\n    },\n    {\n        \"bookingid\": 179\n    },\n    {\n        \"bookingid\": 192\n    },\n    {\n        \"bookingid\": 329\n    },\n    {\n        \"bookingid\": 313\n    },\n    {\n        \"bookingid\": 541\n    },\n    {\n        \"bookingid\": 347\n    },\n    {\n        \"bookingid\": 103\n    },\n    {\n        \"bookingid\": 275\n    },\n    {\n        \"bookingid\": 303\n    },\n    {\n        \"bookingid\": 539\n    },\n    {\n        \"bookingid\": 84\n    },\n    {\n        \"bookingid\": 102\n    },\n    {\n        \"bookingid\": 502\n    },\n    {\n        \"bookingid\": 336\n    },\n    {\n        \"bookingid\": 424\n    },\n    {\n        \"bookingid\": 289\n    },\n    {\n        \"bookingid\": 90\n    },\n    {\n        \"bookingid\": 287\n    },\n    {\n        \"bookingid\": 220\n    },\n    {\n        \"bookingid\": 470\n    },\n    {\n        \"bookingid\": 89\n    },\n    {\n        \"bookingid\": 367\n    },\n    {\n        \"bookingid\": 55\n    },\n    {\n        \"bookingid\": 344\n    },\n    {\n        \"bookingid\": 106\n    },\n    {\n        \"bookingid\": 201\n    },\n    {\n        \"bookingid\": 280\n    },\n    {\n        \"bookingid\": 78\n    },\n    {\n        \"bookingid\": 531\n    },\n    {\n        \"bookingid\": 327\n    },\n    {\n        \"bookingid\": 10\n    },\n    {\n        \"bookingid\": 538\n    },\n    {\n        \"bookingid\": 17\n    },\n    {\n        \"bookingid\": 51\n    },\n    {\n        \"bookingid\": 536\n    },\n    {\n        \"bookingid\": 334\n    },\n    {\n        \"bookingid\": 530\n    },\n    {\n        \"bookingid\": 115\n    },\n    {\n        \"bookingid\": 257\n    },\n    {\n        \"bookingid\": 138\n    },\n    {\n        \"bookingid\": 466\n    },\n    {\n        \"bookingid\": 544\n    },\n    {\n        \"bookingid\": 410\n    },\n    {\n        \"bookingid\": 218\n    },\n    {\n        \"bookingid\": 23\n    },\n    {\n        \"bookingid\": 217\n    },\n    {\n        \"bookingid\": 356\n    },\n    {\n        \"bookingid\": 161\n    },\n    {\n        \"bookingid\": 437\n    },\n    {\n        \"bookingid\": 263\n    },\n    {\n        \"bookingid\": 425\n    },\n    {\n        \"bookingid\": 237\n    },\n    {\n        \"bookingid\": 498\n    },\n    {\n        \"bookingid\": 131\n    },\n    {\n        \"bookingid\": 186\n    },\n    {\n        \"bookingid\": 177\n    },\n    {\n        \"bookingid\": 233\n    },\n    {\n        \"bookingid\": 24\n    },\n    {\n        \"bookingid\": 76\n    },\n    {\n        \"bookingid\": 2\n    },\n    {\n        \"bookingid\": 202\n    },\n    {\n        \"bookingid\": 176\n    },\n    {\n        \"bookingid\": 7\n    },\n    {\n        \"bookingid\": 230\n    },\n    {\n        \"bookingid\": 61\n    },\n    {\n        \"bookingid\": 397\n    },\n    {\n        \"bookingid\": 482\n    },\n    {\n        \"bookingid\": 35\n    },\n    {\n        \"bookingid\": 134\n    },\n    {\n        \"bookingid\": 167\n    },\n    {\n        \"bookingid\": 309\n    },\n    {\n        \"bookingid\": 411\n    },\n    {\n        \"bookingid\": 302\n    },\n    {\n        \"bookingid\": 29\n    },\n    {\n        \"bookingid\": 325\n    },\n    {\n        \"bookingid\": 321\n    },\n    {\n        \"bookingid\": 285\n    },\n    {\n        \"bookingid\": 236\n    },\n    {\n        \"bookingid\": 363\n    },\n    {\n        \"bookingid\": 488\n    },\n    {\n        \"bookingid\": 422\n    },\n    {\n        \"bookingid\": 392\n    },\n    {\n        \"bookingid\": 125\n    },\n    {\n        \"bookingid\": 265\n    },\n    {\n        \"bookingid\": 243\n    },\n    {\n        \"bookingid\": 317\n    },\n    {\n        \"bookingid\": 370\n    },\n    {\n        \"bookingid\": 111\n    },\n    {\n        \"bookingid\": 144\n    },\n    {\n        \"bookingid\": 473\n    },\n    {\n        \"bookingid\": 101\n    },\n    {\n        \"bookingid\": 198\n    },\n    {\n        \"bookingid\": 203\n    },\n    {\n        \"bookingid\": 354\n    },\n    {\n        \"bookingid\": 421\n    },\n    {\n        \"bookingid\": 20\n    },\n    {\n        \"bookingid\": 152\n    },\n    {\n        \"bookingid\": 1\n    },\n    {\n        \"bookingid\": 281\n    },\n    {\n        \"bookingid\": 533\n    },\n    {\n        \"bookingid\": 149\n    },\n    {\n        \"bookingid\": 67\n    },\n    {\n        \"bookingid\": 445\n    },\n    {\n        \"bookingid\": 27\n    },\n    {\n        \"bookingid\": 399\n    },\n    {\n        \"bookingid\": 297\n    },\n    {\n        \"bookingid\": 15\n    },\n    {\n        \"bookingid\": 271\n    },\n    {\n        \"bookingid\": 108\n    },\n    {\n        \"bookingid\": 73\n    },\n    {\n        \"bookingid\": 231\n    },\n    {\n        \"bookingid\": 117\n    },\n    {\n        \"bookingid\": 82\n    },\n    {\n        \"bookingid\": 438\n    },\n    {\n        \"bookingid\": 22\n    },\n    {\n        \"bookingid\": 259\n    },\n    {\n        \"bookingid\": 457\n    },\n    {\n        \"bookingid\": 254\n    },\n    {\n        \"bookingid\": 413\n    },\n    {\n        \"bookingid\": 232\n    },\n    {\n        \"bookingid\": 448\n    },\n    {\n        \"bookingid\": 296\n    },\n    {\n        \"bookingid\": 238\n    },\n    {\n        \"bookingid\": 293\n    },\n    {\n        \"bookingid\": 540\n    },\n    {\n        \"bookingid\": 224\n    },\n    {\n        \"bookingid\": 342\n    },\n    {\n        \"bookingid\": 449\n    },\n    {\n        \"bookingid\": 419\n    },\n    {\n        \"bookingid\": 398\n    },\n    {\n        \"bookingid\": 83\n    },\n    {\n        \"bookingid\": 476\n    },\n    {\n        \"bookingid\": 332\n    },\n    {\n        \"bookingid\": 500\n    },\n    {\n        \"bookingid\": 279\n    },\n    {\n        \"bookingid\": 383\n    },\n    {\n        \"bookingid\": 215\n    },\n    {\n        \"bookingid\": 208\n    },\n    {\n        \"bookingid\": 190\n    },\n    {\n        \"bookingid\": 494\n    },\n    {\n        \"bookingid\": 28\n    },\n    {\n        \"bookingid\": 188\n    },\n    {\n        \"bookingid\": 77\n    },\n    {\n        \"bookingid\": 71\n    },\n    {\n        \"bookingid\": 251\n    },\n    {\n        \"bookingid\": 433\n    },\n    {\n        \"bookingid\": 290\n    },\n    {\n        \"bookingid\": 239\n    },\n    {\n        \"bookingid\": 337\n    },\n    {\n        \"bookingid\": 56\n    },\n    {\n        \"bookingid\": 13\n    },\n    {\n        \"bookingid\": 119\n    },\n    {\n        \"bookingid\": 288\n    },\n    {\n        \"bookingid\": 104\n    },\n    {\n        \"bookingid\": 173\n    },\n    {\n        \"bookingid\": 478\n    },\n    {\n        \"bookingid\": 250\n    },\n    {\n        \"bookingid\": 417\n    },\n    {\n        \"bookingid\": 278\n    },\n    {\n        \"bookingid\": 141\n    },\n    {\n        \"bookingid\": 248\n    },\n    {\n        \"bookingid\": 338\n    },\n    {\n        \"bookingid\": 4\n    },\n    {\n        \"bookingid\": 492\n    },\n    {\n        \"bookingid\": 153\n    },\n    {\n        \"bookingid\": 5\n    },\n    {\n        \"bookingid\": 474\n    },\n    {\n        \"bookingid\": 496\n    },\n    {\n        \"bookingid\": 535\n    },\n    {\n        \"bookingid\": 79\n    },\n    {\n        \"bookingid\": 483\n    },\n    {\n        \"bookingid\": 378\n    },\n    {\n        \"bookingid\": 206\n    },\n    {\n        \"bookingid\": 91\n    },\n    {\n        \"bookingid\": 255\n    },\n    {\n        \"bookingid\": 42\n    },\n    {\n        \"bookingid\": 460\n    },\n    {\n        \"bookingid\": 124\n    },\n    {\n        \"bookingid\": 226\n    },\n    {\n        \"bookingid\": 69\n    },\n    {\n        \"bookingid\": 211\n    },\n    {\n        \"bookingid\": 372\n    },\n    {\n        \"bookingid\": 49\n    },\n    {\n        \"bookingid\": 527\n    },\n    {\n        \"bookingid\": 409\n    },\n    {\n        \"bookingid\": 266\n    },\n    {\n        \"bookingid\": 312\n    },\n    {\n        \"bookingid\": 446\n    },\n    {\n        \"bookingid\": 180\n    },\n    {\n        \"bookingid\": 98\n    },\n    {\n        \"bookingid\": 389\n    },\n    {\n        \"bookingid\": 459\n    },\n    {\n        \"bookingid\": 216\n    },\n    {\n        \"bookingid\": 14\n    },\n    {\n        \"bookingid\": 365\n    },\n    {\n        \"bookingid\": 270\n    },\n    {\n        \"bookingid\": 72\n    },\n    {\n        \"bookingid\": 353\n    },\n    {\n        \"bookingid\": 146\n    },\n    {\n        \"bookingid\": 164\n    },\n    {\n        \"bookingid\": 191\n    },\n    {\n        \"bookingid\": 221\n    },\n    {\n        \"bookingid\": 304\n    },\n    {\n        \"bookingid\": 472\n    },\n    {\n        \"bookingid\": 93\n    },\n    {\n        \"bookingid\": 245\n    },\n    {\n        \"bookingid\": 156\n    },\n    {\n        \"bookingid\": 522\n    },\n    {\n        \"bookingid\": 401\n    },\n    {\n        \"bookingid\": 158\n    },\n    {\n        \"bookingid\": 33\n    },\n    {\n        \"bookingid\": 136\n    },\n    {\n        \"bookingid\": 454\n    },\n    {\n        \"bookingid\": 318\n    },\n    {\n        \"bookingid\": 299\n    },\n    {\n        \"bookingid\": 404\n    },\n    {\n        \"bookingid\": 53\n    },\n    {\n        \"bookingid\": 551\n    },\n    {\n        \"bookingid\": 528\n    },\n    {\n        \"bookingid\": 311\n    },\n    {\n        \"bookingid\": 80\n    },\n    {\n        \"bookingid\": 507\n    },\n    {\n        \"bookingid\": 132\n    },\n    {\n        \"bookingid\": 489\n    },\n    {\n        \"bookingid\": 376\n    },\n    {\n        \"bookingid\": 510\n    },\n    {\n        \"bookingid\": 352\n    },\n    {\n        \"bookingid\": 85\n    },\n    {\n        \"bookingid\": 274\n    },\n    {\n        \"bookingid\": 512\n    },\n    {\n        \"bookingid\": 550\n    },\n    {\n        \"bookingid\": 249\n    },\n    {\n        \"bookingid\": 178\n    },\n    {\n        \"bookingid\": 480\n    },\n    {\n        \"bookingid\": 464\n    },\n    {\n        \"bookingid\": 160\n    },\n    {\n        \"bookingid\": 371\n    },\n    {\n        \"bookingid\": 63\n    },\n    {\n        \"bookingid\": 18\n    },\n    {\n        \"bookingid\": 355\n    },\n    {\n        \"bookingid\": 455\n    },\n    {\n        \"bookingid\": 165\n    },\n    {\n        \"bookingid\": 95\n    },\n    {\n        \"bookingid\": 118\n    },\n    {\n        \"bookingid\": 384\n    },\n    {\n        \"bookingid\": 140\n    },\n    {\n        \"bookingid\": 210\n    },\n    {\n        \"bookingid\": 467\n    },\n    {\n        \"bookingid\": 99\n    },\n    {\n        \"bookingid\": 495\n    },\n    {\n        \"bookingid\": 373\n    },\n    {\n        \"bookingid\": 258\n    },\n    {\n        \"bookingid\": 307\n    },\n    {\n        \"bookingid\": 381\n    },\n    {\n        \"bookingid\": 333\n    },\n    {\n        \"bookingid\": 59\n    },\n    {\n        \"bookingid\": 519\n    },\n    {\n        \"bookingid\": 209\n    },\n    {\n        \"bookingid\": 490\n    },\n    {\n        \"bookingid\": 465\n    },\n    {\n        \"bookingid\": 443\n    },\n    {\n        \"bookingid\": 513\n    },\n    {\n        \"bookingid\": 426\n    },\n    {\n        \"bookingid\": 66\n    },\n    {\n        \"bookingid\": 548\n    },\n    {\n        \"bookingid\": 88\n    },\n    {\n        \"bookingid\": 305\n    },\n    {\n        \"bookingid\": 227\n    },\n    {\n        \"bookingid\": 379\n    },\n    {\n        \"bookingid\": 427\n    },\n    {\n        \"bookingid\": 391\n    },\n    {\n        \"bookingid\": 12\n    },\n    {\n        \"bookingid\": 405\n    },\n    {\n        \"bookingid\": 200\n    },\n    {\n        \"bookingid\": 486\n    },\n    {\n        \"bookingid\": 403\n    },\n    {\n        \"bookingid\": 150\n    },\n    {\n        \"bookingid\": 553\n    },\n    {\n        \"bookingid\": 385\n    },\n    {\n        \"bookingid\": 112\n    },\n    {\n        \"bookingid\": 377\n    },\n    {\n        \"bookingid\": 48\n    },\n    {\n        \"bookingid\": 105\n    },\n    {\n        \"bookingid\": 360\n    },\n    {\n        \"bookingid\": 70\n    },\n    {\n        \"bookingid\": 54\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"//Check if the response contains booking details.\r",
+									"pm.test(\"Response contains booking details\", function () {\r",
+									"    pm.expect(responseData).to.have.property(\"firstname\");\r",
+									"    pm.expect(responseData).to.have.property(\"lastname\");\r",
+									"    pm.expect(responseData).to.have.property(\"totalprice\");\r",
+									"    pm.expect(responseData).to.have.property(\"depositpaid\");\r",
+									"    pm.expect(responseData).to.have.property(\"bookingdates\");\r",
+									"    pm.expect(responseData.bookingdates).to.have.property(\"checkin\");\r",
+									"    pm.expect(responseData.bookingdates).to.have.property(\"checkout\");\r",
+									"    pm.expect(responseData).to.have.property(\"additionalneeds\");\r",
+									"});\r",
+									"\r",
+									"//Check if the response contains non-null and non-empty booking details.\r",
+									"pm.test(\"Booking details are not null\", function () {\r",
+									"    pm.expect(responseData.firstname).to.not.be.null;\r",
+									"    pm.expect(responseData.lastname).to.not.be.null;\r",
+									"    pm.expect(responseData.totalprice).to.not.be.null;\r",
+									"    pm.expect(responseData.depositpaid).to.not.be.null;\r",
+									"    pm.expect(responseData.bookingdates.checkin).to.not.be.null;\r",
+									"    pm.expect(responseData.bookingdates.checkout).to.not.be.null;\r",
+									"    pm.expect(responseData.additionalneeds).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Booking details are not empty\", function () {\r",
+									"    pm.expect(responseData.firstname).to.not.be.undefined;\r",
+									"    pm.expect(responseData.lastname).to.not.be.undefined;\r",
+									"    pm.expect(responseData.totalprice).to.not.be.undefined;\r",
+									"    pm.expect(responseData.depositpaid).to.not.be.undefined;\r",
+									"    pm.expect(responseData.bookingdates.checkin).to.not.be.undefined;\r",
+									"    pm.expect(responseData.bookingdates.checkout).to.not.be.undefined;\r",
+									"    pm.expect(responseData.additionalneeds).to.not.be.undefined;\r",
+									"});\r",
+									"\r",
+									"//Check the type of booking details\r",
+									"pm.test(\"Booking details are string\", function () {\r",
+									"    pm.expect(typeof responseData.firstname).to.equal('string');\r",
+									"    pm.expect(typeof responseData.lastname).to.equal('string');\r",
+									"    pm.expect(typeof responseData.totalprice).to.equal('number');\r",
+									"    pm.expect(typeof responseData.depositpaid).to.equal('boolean');\r",
+									"    pm.expect(typeof responseData.bookingdates.checkin).to.equal('string');\r",
+									"    pm.expect(typeof responseData.bookingdates.checkout).to.equal('string');\r",
+									"    pm.expect(typeof responseData.additionalneeds).to.equal('string');\r",
+									"});\r",
+									"\r",
+									"//Expected Values\r",
+									"var expectedFirstName = pm.collectionVariables.get(\"firstname\");\r",
+									"var expectedLastName = pm.collectionVariables.get(\"lastname\");\r",
+									"var expectedTotalPrice = pm.collectionVariables.get(\"totalprice\");\r",
+									"var expectedDepositPaid = pm.collectionVariables.get(\"depositPaid\") === 'true';\r",
+									"var expectedCheckIn = pm.collectionVariables.get(\"checkinDate\");\r",
+									"var expectedCheckOut = pm.collectionVariables.get(\"checkoutDate\");\r",
+									"var expectedAdditionalNeeds = pm.collectionVariables.get(\"additionalneeds\");\r",
+									"\r",
+									"//Check the values of booking details\r",
+									"pm.test(\"Check the value of firstname\", function () {\r",
+									"    pm.expect(responseData.firstname).to.equal(expectedFirstName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of lastname\", function () {\r",
+									"    pm.expect(responseData.lastname).to.equal(expectedLastName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of totalprice\", function () {\r",
+									"    pm.expect(responseData.totalprice).to.equal(expectedTotalPrice);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of depositpaid\", function () {\r",
+									"    pm.expect(responseData.depositpaid).to.equal(expectedDepositPaid);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkin\", function () {\r",
+									"    pm.expect(responseData.bookingdates.checkin).to.equal(expectedCheckIn);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkout\", function () {\r",
+									"    pm.expect(responseData.bookingdates.checkout).to.equal(expectedCheckOut);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of additionalneeds\", function () {\r",
+									"    pm.expect(responseData.additionalneeds).to.equal(expectedAdditionalNeeds);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "### Get Booking Details\n\nThis endpoint retrieves the details of a specific booking identified by the `bookingID`.\n\n#### Response\n\nThe response provides the booking details including the first name, last name, total price, deposit paid status, booking dates (check-in and check-out), and any additional needs.\n\n- `firstname` (string): The first name of the guest.\n    \n- `lastname` (string): The last name of the guest.\n    \n- `totalprice` (number): The total price of the booking.\n    \n- `depositpaid` (boolean): Indicates whether the deposit has been paid.\n    \n- `bookingdates` (object): An object containing check-in and check-out dates.\n    \n    - `checkin` (string): The check-in date.\n        \n    - `checkout` (string): The check-out date.\n        \n- `additionalneeds` (string): Any additional needs or requests."
+					},
+					"response": [
+						{
+							"name": "Get Booking",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://restful-booker.herokuapp.com/booking/:bookingID",
+									"protocol": "https",
+									"host": [
+										"restful-booker",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"booking",
+										":bookingID"
+									],
+									"variable": [
+										{
+											"key": "bookingID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745512367&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Um784Dlx0NYqPCSBICUNQ%2FCiB9KP8LTs4IdQ0jhdjRk%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745512367&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Um784Dlx0NYqPCSBICUNQ%2FCiB9KP8LTs4IdQ0jhdjRk%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "184"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"b8-/KnWrMIsR4H5kWo/OOWRP019iho\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 16:32:47 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"firstname\": \"Abdelrahman_79\",\n    \"lastname\": \"Fahmy_3442\",\n    \"totalprice\": 803,\n    \"depositpaid\": true,\n    \"bookingdates\": {\n        \"checkin\": \"1996-03-18\",\n        \"checkout\": \"1996-03-27\"\n    },\n    \"additionalneeds\": \"Breakfast\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Booking",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generating first name\r",
+									"let firstName = \"Abdelrahman_\" + Math.floor(Math.random() * 10000);\r",
+									"pm.collectionVariables.set(\"firstname\", firstName);\r",
+									"\r",
+									"// Generating last name\r",
+									"let lastName = \"Fahmy_\" + Math.floor(Math.random() * 10000);\r",
+									"pm.collectionVariables.set(\"lastname\", lastName);\r",
+									"\r",
+									"// Generating total price\r",
+									"let totalPrice = Math.floor(Math.random() * 1000) + 1;\r",
+									"pm.collectionVariables.set(\"totalprice\", totalPrice);\r",
+									"\r",
+									"// Generating random check-in date between 1990-01-01 and 1999-12-30\r",
+									"let year = Math.floor(Math.random() * 10) + 1990; // 1990 to 1999\r",
+									"let month = Math.floor(Math.random() * 12); // 0 to 11\r",
+									"let day = Math.floor(Math.random() * 28) + 1; // 1 to 28 (safe for all months)\r",
+									"// Generating check-in date\r",
+									"let checkin = new Date(year, month, day);\r",
+									"// Checkout will be 1 to 20 days after checkin\r",
+									"let checkout = new Date(checkin);\r",
+									"checkout.setDate(checkin.getDate() + Math.floor(Math.random() * 20) + 1);\r",
+									"// Format to YYYY-MM-DD\r",
+									"function format(date) {\r",
+									"    return date.toISOString().split('T')[0];\r",
+									"}\r",
+									"pm.collectionVariables.set(\"checkinDate\", format(checkin));\r",
+									"pm.collectionVariables.set(\"checkoutDate\", format(checkout));\r",
+									"\r",
+									"// Generating additional needs\r",
+									"function getRandomAdditionalNeeds() {\r",
+									"    let options = [\"Breakfast\", \"Lunch\", \"Dinner\"];\r",
+									"    return options[Math.floor(Math.random() * options.length)];\r",
+									"}\r",
+									"pm.collectionVariables.set(\"additionalneeds\", getRandomAdditionalNeeds());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"//Expected Values\r",
+									"var expectedFirstName = pm.collectionVariables.get(\"firstname\");\r",
+									"var expectedLastName = pm.collectionVariables.get(\"lastname\");\r",
+									"var expectedTotalPrice = pm.collectionVariables.get(\"totalprice\");\r",
+									"var expectedDepositPaid = pm.collectionVariables.get(\"depositPaid\") === 'true';\r",
+									"var expectedCheckIn = pm.collectionVariables.get(\"checkinDate\");\r",
+									"var expectedCheckOut = pm.collectionVariables.get(\"checkoutDate\");\r",
+									"var expectedAdditionalNeeds = pm.collectionVariables.get(\"additionalneeds\");\r",
+									"\r",
+									"//Check the values of booking details\r",
+									"pm.test(\"Check the value of firstname\", function () {\r",
+									"    pm.expect(responseData.firstname).to.equal(expectedFirstName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of lastname\", function () {\r",
+									"    pm.expect(responseData.lastname).to.equal(expectedLastName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of totalprice\", function () {\r",
+									"    pm.expect(responseData.totalprice).to.equal(expectedTotalPrice);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of depositpaid\", function () {\r",
+									"    pm.expect(responseData.depositpaid).to.equal(expectedDepositPaid);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkin\", function () {\r",
+									"    pm.expect(responseData.bookingdates.checkin).to.equal(expectedCheckIn);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkout\", function () {\r",
+									"    pm.expect(responseData.bookingdates.checkout).to.equal(expectedCheckOut);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of additionalneeds\", function () {\r",
+									"    pm.expect(responseData.additionalneeds).to.equal(expectedAdditionalNeeds);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\" : \"{{firstname}}\",\r\n    \"lastname\" : \"{{lastname}}\",\r\n    \"totalprice\" : {{totalprice}},\r\n    \"depositpaid\" : {{depositPaid}},\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"{{checkinDate}}\",\r\n        \"checkout\" : \"{{checkoutDate}}\"\r\n    },\r\n    \"additionalneeds\" : \"{{additionalneeds}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "### Update Booking Details\n\nThis endpoint allows the user to update the booking details by sending an HTTP PUT request to the specified booking ID.\n\n#### Request Body\n\n- `firstname` (string, required): The first name of the guest.\n    \n- `lastname` (string, required): The last name of the guest.\n    \n- `totalprice` (number, required): The total price of the booking.\n    \n- `depositpaid` _(boolean, required)_: Indicates whether the deposit has been paid (`true` or `false`).\n    \n- `bookingdates` _(object, required)_: An object containing the check-in and check-out dates.\n    \n    - `checkin` _(string, required)_: The check-in date in `YYYY-MM-DD` format.\n        \n    - `checkout` _(string, required)_: The check-out date in `YYYY-MM-DD` format.\n        \n- `additionalneeds` _(string, optional)_: Any additional requirements the guest has.\n    \n\n#### Response\n\nThe response is in JSON format and includes the following properties:\n\n- `firstname` (string): The first name of the guest.\n    \n- `lastname` (string): The last name of the guest.\n    \n- `totalprice` (number): The total price of the booking.\n    \n- `depositpaid` (boolean): Indicates if the deposit has been paid.\n    \n- `bookingdates` (object): An object containing the check-in and check-out dates.\n    \n    - `checkin` (string): The check-in date.\n        \n    - `checkout` (string): The check-out date.\n        \n- `additionalneeds` (string): Any additional needs specified for the booking."
+					},
+					"response": [
+						{
+							"name": "Update Booking",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Cookie",
+										"value": "token=",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\" : \"Abdelrahman_625\",\r\n    \"lastname\" : \"Fahmy_44\",\r\n    \"totalprice\" : 711,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"1991-06-03\",\r\n        \"checkout\" : \"1991-06-04\"\r\n    },\r\n    \"additionalneeds\" : \"Lunch\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://restful-booker.herokuapp.com/booking/:bookingID",
+									"protocol": "https",
+									"host": [
+										"restful-booker",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"booking",
+										":bookingID"
+									],
+									"variable": [
+										{
+											"key": "bookingID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745513837&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Nn9r%2FXTkUPGfjScwmggFLlry2U6e7%2B0Hvo6ZmMWA780%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745513837&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Nn9r%2FXTkUPGfjScwmggFLlry2U6e7%2B0Hvo6ZmMWA780%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"b3-6CGJ/X7RfUor7XBVmhpXq9B8bJE\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 16:57:17 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"firstname\": \"Abdelrahman_625\",\n    \"lastname\": \"Fahmy_44\",\n    \"totalprice\": 711,\n    \"depositpaid\": true,\n    \"bookingdates\": {\n        \"checkin\": \"1991-06-03\",\n        \"checkout\": \"1991-06-04\"\n    },\n    \"additionalneeds\": \"Lunch\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Booking After Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"//Expected Values\r",
+									"var expectedFirstName = pm.collectionVariables.get(\"firstname\");\r",
+									"var expectedLastName = pm.collectionVariables.get(\"lastname\");\r",
+									"var expectedTotalPrice = pm.collectionVariables.get(\"totalprice\");\r",
+									"var expectedDepositPaid = pm.collectionVariables.get(\"depositPaid\") === 'true';\r",
+									"var expectedCheckIn = pm.collectionVariables.get(\"checkinDate\");\r",
+									"var expectedCheckOut = pm.collectionVariables.get(\"checkoutDate\");\r",
+									"var expectedAdditionalNeeds = pm.collectionVariables.get(\"additionalneeds\");\r",
+									"\r",
+									"//Check the values of booking details\r",
+									"pm.test(\"Check the value of firstname\", function () {\r",
+									"    pm.expect(responseData.firstname).to.equal(expectedFirstName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of lastname\", function () {\r",
+									"    pm.expect(responseData.lastname).to.equal(expectedLastName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of totalprice\", function () {\r",
+									"    pm.expect(responseData.totalprice).to.equal(expectedTotalPrice);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of depositpaid\", function () {\r",
+									"    pm.expect(responseData.depositpaid).to.equal(expectedDepositPaid);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkin\", function () {\r",
+									"    pm.expect(responseData.bookingdates.checkin).to.equal(expectedCheckIn);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of checkout\", function () {\r",
+									"    pm.expect(responseData.bookingdates.checkout).to.equal(expectedCheckOut);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of additionalneeds\", function () {\r",
+									"    pm.expect(responseData.additionalneeds).to.equal(expectedAdditionalNeeds);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "This endpoint retrieves the details of a specific booking identified by the provided booking ID after being updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Partial Update Booking",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generating first name\r",
+									"let firstName = \"Abdelrahman_\" + Math.floor(Math.random() * 10000);\r",
+									"pm.collectionVariables.set(\"firstname\", firstName);\r",
+									"\r",
+									"// Generating last name\r",
+									"let lastName = \"Fahmy_\" + Math.floor(Math.random() * 10000);\r",
+									"pm.collectionVariables.set(\"lastname\", lastName);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"//Expected Values\r",
+									"var expectedFirstName = pm.collectionVariables.get(\"firstname\");\r",
+									"var expectedLastName = pm.collectionVariables.get(\"lastname\");\r",
+									"\r",
+									"//Check the values of booking details\r",
+									"pm.test(\"Check the value of firstname\", function () {\r",
+									"    pm.expect(responseData.firstname).to.equal(expectedFirstName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of lastname\", function () {\r",
+									"    pm.expect(responseData.lastname).to.equal(expectedLastName);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\" : \"{{firstname}}\",\r\n    \"lastname\" : \"{{lastname}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "### Partially Update Booking Details\n\nThis endpoint is used to update the details of a specific booking partially identified by the `bookingID`.\n\n#### Request Body\n\n- `firstname` (string): The updated first name for the booking.\n    \n- `lastname` (string): The updated last name for the booking.\n    \n\n🟢 **Note**: Only the fields you include in the request will be changed.\n\n#### Response\n\nThe response provides the updated booking details including the first name, last name, total price, deposit paid status, booking dates (check-in and check-out), and any additional needs.\n\n- `firstname` (string): The first name of the guest.\n    \n- `lastname` (string): The last name of the guest.\n    \n- `totalprice` (number): The total price of the booking.\n    \n- `depositpaid` (boolean): Indicates whether the deposit has been paid.\n    \n- `bookingdates` (object): An object containing check-in and check-out dates.\n    \n    - `checkin` (string): The check-in date.\n        \n    - `checkout` (string): The check-out date.\n        \n- `additionalneeds` (string): Any additional needs or requests."
+					},
+					"response": [
+						{
+							"name": "Partial Update Booking",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Cookie",
+										"value": "token=",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\" : \"Abdelrahman_5543\",\r\n    \"lastname\" : \"Fahmy_4631\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://restful-booker.herokuapp.com/booking/:bookingID",
+									"protocol": "https",
+									"host": [
+										"restful-booker",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"booking",
+										":bookingID"
+									],
+									"variable": [
+										{
+											"key": "bookingID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745514953&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Exrt8PQknj4JW3tyvLc1mzyau0z%2Bace5C4ecnEDs6Ps%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745514953&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Exrt8PQknj4JW3tyvLc1mzyau0z%2Bace5C4ecnEDs6Ps%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "186"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"ba-r0xBtMcgDnrNrWanm2gP4K5/DO8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 17:15:53 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"firstname\": \"Abdelrahman_5543\",\n    \"lastname\": \"Fahmy_4631\",\n    \"totalprice\": 453,\n    \"depositpaid\": true,\n    \"bookingdates\": {\n        \"checkin\": \"1996-11-24\",\n        \"checkout\": \"1996-12-12\"\n    },\n    \"additionalneeds\": \"Breakfast\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Booking After Partial Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 200 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"\r",
+									"//Expected Values\r",
+									"var expectedFirstName = pm.collectionVariables.get(\"firstname\");\r",
+									"var expectedLastName = pm.collectionVariables.get(\"lastname\");\r",
+									"\r",
+									"//Check the values of booking details\r",
+									"pm.test(\"Check the value of firstname\", function () {\r",
+									"    pm.expect(responseData.firstname).to.equal(expectedFirstName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check the value of lastname\", function () {\r",
+									"    pm.expect(responseData.lastname).to.equal(expectedLastName);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "This endpoint retrieves the details of a specific booking identified by the provided booking ID after being partially updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 201 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Created\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "### Delete Booking\n\nThis endpoint is used to delete a specific booking by providing the booking ID in the URL.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response\n\n- Status: 201\n    \n- Content-Type: text/plain\n    \n- Body: \"Created\""
+					},
+					"response": [
+						{
+							"name": "Delete Booking",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "token=",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://restful-booker.herokuapp.com/booking/:bookingID",
+									"protocol": "https",
+									"host": [
+										"restful-booker",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"booking",
+										":bookingID"
+									],
+									"variable": [
+										{
+											"key": "bookingID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745516137&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Pg98Yp6pFpS2kZieX7%2B1LesWpeOtw1CjFJ0Lkv81tsc%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745516137&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=Pg98Yp6pFpS2kZieX7%2B1LesWpeOtw1CjFJ0Lkv81tsc%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"7-rM9AyJuqT6iOan/xHh+AW+7K/T8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 17:35:37 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "Created"
+						}
+					]
+				},
+				{
+					"name": "Get Deleted Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Check if the response status code is 404 and response time is less than 3000ms.\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 3000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/booking/{{bookingID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingID}}"
+							]
+						},
+						"description": "# Get Deleted Booking\n\nThis endpoint is used to retrieve the details of a specific booking using its booking ID. If the booking has been deleted or does not exist, the API responds with a plain text message indicating the booking was not found.\n\n## Response\n\nThe response for this request is of type `text/plain` and returns a \"Not Found\" message."
+					},
+					"response": [
+						{
+							"name": "Get Deleted Booking",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://restful-booker.herokuapp.com/booking/:bookingID",
+									"protocol": "https",
+									"host": [
+										"restful-booker",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"booking",
+										":bookingID"
+									],
+									"variable": [
+										{
+											"key": "bookingID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1745516208&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=cswOLAjqZPLbE%2FH8UIGKkvXSdw1qXDUn6bGELRoj85c%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1745516208&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=cswOLAjqZPLbE%2FH8UIGKkvXSdw1qXDUn6bGELRoj85c%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "9"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"9-0gXL1ngzMqISxa6S1zx3F4wtLyg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Apr 2025 17:36:48 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "Not Found"
+						}
+					]
+				}
+			],
+			"description": "> _**This folder contains all endpoints related to booking management in the API. You can**_ `retrieve`_**,**_ `create`_**,**_ `update`_**,**_ `partially update`_**, or**_ `delete` _**bookings.**_"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "password123",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "e0044699a34d013"
+		},
+		{
+			"key": "firstname",
+			"value": "Abdelrahman_128"
+		},
+		{
+			"key": "lastname",
+			"value": "Fahmy_236"
+		},
+		{
+			"key": "totalprice",
+			"value": 521
+		},
+		{
+			"key": "checkinDate",
+			"value": "1995-08-03"
+		},
+		{
+			"key": "checkoutDate",
+			"value": "1995-08-21"
+		},
+		{
+			"key": "additionalneeds",
+			"value": "Lunch"
+		},
+		{
+			"key": "depositPaid",
+			"value": "true",
+			"type": "string"
+		},
+		{
+			"key": "bookingID",
+			"value": 2265
+		}
+	]
+}
